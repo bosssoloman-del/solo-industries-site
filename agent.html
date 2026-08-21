@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Talk to Da Nine — SoLo Industries Systems Inc.</title>
+<meta name="description" content="Talk directly with a member of Da Nine, the Board of Directors of SoLo Industries Systems Inc.">
+<meta name="theme-color" content="#14110F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/solo.css">
+<link rel="icon" href="/assets/solo-industries-systems-inc-logo.png">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav"><div class="wrap"><div class="nav-in">
+<a class="brand" href="/"><img src="/assets/solo-industries-systems-inc-logo.png" alt="SoLo Industries Systems Inc."><span>SoLo Industries<br>Systems Inc</span></a>
+<div class="nav-links"><a href="/system.html">The System</a><a href="/companies.html">Companies</a><a href="/engines.html">Engines</a><a href="/board.html" aria-current="page">The Board</a><a href="/journal.html">Journal</a><a href="/elaine.html">Elaine</a></div>
+<button class="burger" aria-label="Menu" aria-expanded="false" onclick="var m=document.getElementById('mob');m.classList.toggle('open');this.setAttribute('aria-expanded',m.classList.contains('open'))">&#9776;</button>
+</div><div class="mobile" id="mob"><a href="/system.html">The System</a><a href="/companies.html">Companies</a><a href="/engines.html">Engines</a><a href="/board.html">The Board</a><a href="/journal.html">Journal</a><a href="/elaine.html">Elaine</a></div></div></nav>
+
+<main id="main">
+<section class="hero"><div class="wrap">
+<p class="eyebrow" id="seat-label">Da Nine direct channel</p>
+<h1>Talk to <em id="agent-heading">a Director</em>.</h1>
+<p class="lede" id="agent-description">Choose a member of the Board to speak with her directly. Each director keeps her own persona, specialty, and limits while reporting through Elaine to the Founder.</p>
+</div></section>
+
+<section><div class="wrap" style="max-width:860px">
+<div class="card" style="padding:0;overflow:hidden">
+<div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:var(--ink3)">
+<img src="/assets/solo-industries-systems-inc-logo.png" alt="" style="height:34px">
+<div><b id="agent-name" style="display:block">Da Nine</b><span class="kicker" id="agent-role" style="margin:0">Board of Directors</span></div>
+<span class="kicker" id="st" style="margin:0 0 0 auto">connecting&hellip;</span>
+</div>
+<div id="log" style="padding:20px;min-height:300px;max-height:520px;overflow-y:auto;display:flex;flex-direction:column;gap:16px"></div>
+<div style="display:flex;gap:10px;padding:16px 20px;border-top:1px solid var(--line);background:var(--ink3)">
+<input id="q" placeholder="Ask a Director..." autocomplete="off" style="flex:1;min-width:0;padding:13px;background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:5px;font:inherit;font-size:16px">
+<button class="btn b-gold" id="send-button" onclick="send()">Send</button>
+</div>
+<p style="font-size:.72rem;color:var(--muted);text-align:center;padding:0 20px 16px;margin:0">Direct Board channel. The director answers in her own voice and remains governed by Elaine, Ma&rsquo;at, and Founder authority.</p>
+</div>
+<div class="cta"><a class="btn b-ghost" href="/board.html">Back to the Board</a><a class="btn b-ghost" href="/elaine.html">Talk to Elaine</a></div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><div class="fbot"><span>&copy; 2026 SoLo Industries Systems Inc. Black-owned. New Orleans East, Louisiana.</span><span>Nothing here is legal, tax, or investment advice.</span></div></div></footer>
+
+<script>
+window.SOLO_API = "https://api.soloindustriesblack.com";
+var roster = {
+  Elena: ["Systems Architecture", "Infrastructure, automation, integrations, deployment readiness, and the shape of the build."],
+  Ernestine: ["Operations", "Workflow, checklists, file governance, and the print-on-demand pipeline."],
+  Estelle: ["Research & Knowledge", "Sourced answers, verified facts, inference checks, and knowledge gaps."],
+  Eda: ["Finance", "Unit economics, pricing ladders, margins, assumptions, and the math behind decisions."],
+  Ebony: ["Compliance & Ma'at Governance", "Governance review, risk grading, approval gates, and compliance boundaries."],
+  Ezmarelda: ["Publishing & Editorial", "Manuscripts, structure, editorial development, and publishing workflows."],
+  Etta: ["Brand Standards", "The Color Rule, marks, tiers, visual identity, and brand exceptions."],
+  Ella: ["Creative & Campaign", "Concepts, naming, campaigns, product copy, and launch sequences."],
+  Evangline: ["Customer Experience", "Products, sizing, shipping, policy, and customer support."]
+};
+var params = new URLSearchParams(location.search);
+var agent = params.get("agent") || "";
+if (!roster[agent]) {
+  location.replace("/board.html");
+}
+var role = roster[agent][0];
+var description = roster[agent][1];
+document.title = "Talk to " + agent + " — SoLo Industries Systems Inc.";
+document.getElementById("agent-heading").textContent = agent;
+document.getElementById("agent-name").textContent = agent;
+document.getElementById("agent-role").textContent = role + " Director";
+document.getElementById("seat-label").textContent = role + " · Direct Board channel";
+document.getElementById("agent-description").textContent = description;
+document.getElementById("q").placeholder = "Ask " + agent + "...";
+
+var busy = false;
+function make(t, c, x) {
+  var n = document.createElement(t);
+  if (c) n.className = c;
+  if (x !== undefined) n.textContent = x;
+  return n;
+}
+function add(kind, who, text) {
+  var log = document.getElementById("log");
+  var box = make("div");
+  box.style.cssText = kind === "user" ? "align-self:flex-end;max-width:86%" : "align-self:flex-start;max-width:92%";
+  if (kind !== "user") {
+    var label = make("div", "kicker", who);
+    label.style.margin = "0 0 6px";
+    box.appendChild(label);
+  }
+  var body = make("div", null, text);
+  body.style.cssText = kind === "user"
+    ? "background:var(--green);color:#fff;padding:12px 15px;border-radius:6px;white-space:pre-wrap"
+    : "background:var(--ink2);border:1px solid var(--line);padding:13px 16px;border-radius:6px;white-space:pre-wrap";
+  box.appendChild(body);
+  log.appendChild(box);
+  log.scrollTop = log.scrollHeight;
+  return box;
+}
+function send() {
+  var input = document.getElementById("q");
+  var message = (input.value || "").trim();
+  if (!message || busy) return;
+  busy = true;
+  input.value = "";
+  add("user", "", message);
+  var pending = add("agent", agent.toUpperCase(), "...");
+  fetch(SOLO_API + "/public/chat", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({message: message, agent: agent})
+  }).then(function(response) {
+    return response.json().then(function(data) {
+      if (!response.ok) throw new Error(data.error || data.reply || "Chat unavailable");
+      return data;
+    });
+  }).then(function(data) {
+    pending.remove();
+    add("agent", (data.display_name || agent).toUpperCase(), data.reply || "I could not answer that one.");
+  }).catch(function(error) {
+    pending.remove();
+    add("agent", agent.toUpperCase(), error.message || "This direct channel is temporarily unavailable.");
+  }).then(function() {
+    busy = false;
+    input.focus();
+  });
+}
+document.getElementById("q").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    send();
+  }
+});
+fetch(SOLO_API + "/public/health").then(function(response) {
+  if (!response.ok) throw new Error();
+  document.getElementById("st").textContent = "online · direct";
+  add("agent", agent.toUpperCase(), agent + " here. You are speaking to me directly about " + role.toLowerCase() + ". Elaine remains Chief Executive, and I answer in my own seat and voice.");
+}).catch(function() {
+  document.getElementById("st").textContent = "offline";
+  add("agent", agent.toUpperCase(), "My direct channel is offline right now. Try Elaine or come back shortly.");
+});
+</script>
+</body>
+</html>
