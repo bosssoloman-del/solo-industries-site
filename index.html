@@ -423,196 +423,65 @@ footer{padding:44px 0 56px}
 </div></footer>
 <script>
 /* ============================================================
-   ELAINE + DA NINE — client-side routing engine
-   Routing table mirrors App/sgie_da_nine.py ROUTE_KEYWORDS.
-   Persona voice mirrors App/persona.py PERSONA_REGISTRY.
-   Runs entirely in-browser: no backend, nothing to expire.
+   ELAINE + DA NINE — LIVE.
+   Calls the real operating system on the SoLo Server over a
+   Cloudflare tunnel. No canned answers. If the Mac is asleep the
+   widget says so plainly instead of faking an answer.
    ============================================================ */
+var SOLO_API = "https://api.soloindustriesblack.com";
+var soloBusy = false;
 
-/* --- ROUTE_KEYWORDS (order preserved; first match wins) --- */
-var ROUTES = [
-  ["architecture","Elena"],["schema","Elena"],["deploy","Elena"],["integration","Elena"],
-  ["server","Elena"],["automation","Elena"],["infrastructure","Elena"],["technical","Elena"],
-  ["admin","Elaine"],["security","Elaine"],["license","Elaine"],["mailbox","Elaine"],
-  ["teams","Elaine"],["tenant","Elaine"],["site","Elaine"],
-  ["operations","Ernestine"],["workflow","Ernestine"],["checklist","Ernestine"],
-  ["pod","Ernestine"],["shopify","Ernestine"],["printify","Ernestine"],
-  ["gelato","Ernestine"],["folder","Ernestine"],
-  ["research","Estelle"],["knowledge","Estelle"],["source","Estelle"],
-  ["summary","Estelle"],["summarize","Estelle"],
-  ["finance","Eda"],["pricing","Eda"],["price","Eda"],["margin","Eda"],
-  ["p&l","Eda"],["pnl","Eda"],["cash","Eda"],
-  ["compliance","Ebony"],["governance","Ebony"],["filing","Ebony"],
-  ["legal","Ebony"],["formation","Ebony"],["ma'at","Ebony"],["maat","Ebony"],
-  ["book","Ezmarelda"],["manuscript","Ezmarelda"],["publishing","Ezmarelda"],
-  ["isbn","Ezmarelda"],["lulu","Ezmarelda"],["tku","Ezmarelda"],["ccg","Ezmarelda"],
-  ["kushite","Ezmarelda"],["loner","Ezmarelda"],
-  ["brand","Etta"],["logo","Etta"],["pantone","Etta"],["color","Etta"],
-  ["badge","Etta"],["identity","Etta"],
-  ["creative","Ella"],["campaign","Ella"],["social","Ella"],
-  ["post","Ella"],["copy","Ella"],["launch","Ella"],
-  ["customer","Evangline"],["order","Evangline"],["shipping","Evangline"],
-  ["refund","Evangline"],["sizing","Evangline"],["support","Evangline"]
-];
+function soloEl(t,c,x){var n=document.createElement(t);if(c)n.className=c;
+  if(x!==undefined)n.textContent=x;return n;}
 
-var SEATS = {
-  "Elaine":"Coordinating Intelligence",
-  "Elena":"Systems Architecture",
-  "Ernestine":"Operations",
-  "Estelle":"Research & Knowledge",
-  "Eda":"Finance",
-  "Ebony":"Compliance & Ma'at Governance",
-  "Ezmarelda":"Publishing & Editorial",
-  "Etta":"Brand Standards",
-  "Ella":"Creative & Campaign",
-  "Evangline":"Customer Experience"
-};
-
-/* --- Answer bank: grounded in real company canon --- */
-var ANSWERS = [
- { k:["phat man","phatman","apparel","streetwear","shirt","tee","weight class","royal","kap","kings apply","sovereign algorithm","ssnd","sfl line","growth"],
-   a:"Evangline",
-   t:"PHAT Man Apparel is the streetwear line &mdash; Proud, Hairy and Tatted. Casual and luxury pieces for men who don't fit the mold. It's tiered by Weight Class: ROYAL sits at the top, and Kings Apply Pressure is the badge you earn. The design lines are SSND, SFL, GROWTH, The Sovereign Algorithm, and Quad-Sovereign Algorithm. Thirty-five products are live right now at phat-man-llc.myshopify.com." },
-
- { k:["book","kushite","chronicles","publish","manuscript","loner","out the mud","read","novel","series"],
-   a:"Ezmarelda",
-   t:"Loner Publishing is the in-house imprint &mdash; written, edited, and released without a middleman. The Kushite Chronicles I&ndash;III builds the mythology the rest of the empire draws from. <i>Out the Mud and Into the Machine</i> is the record of how this system actually got built. Continuity across the canon is protected, not improvised." },
-
- { k:["scented","serenity","candle","soap","lotion","handmade"],
-   a:"Ernestine",
-   t:"Scented Serenity is handmade goods &mdash; candles, soaps, lotions. Made by hand in small batches, not sourced and relabeled. It sits second in the chain: Highway Bean grows the raw material, Scented Serenity turns it into finished premium product." },
-
- { k:["highway bean","bean","farm","agriculture","grow","herb","vegetable","fruit"],
-   a:"Ernestine",
-   t:"Highway Bean Company is the agriculture line &mdash; fruits, herbs, and vegetables. It's the first link in the chain. Everything downstream is built on material we grow ourselves instead of buying at someone else's price." },
-
- { k:["dolo","real estate","property","rei","acquisition"],
-   a:"Eda",
-   t:"DoLo REI is the real estate arm &mdash; investment and acquisition. It's the ground the whole structure stands on. Long-hold plays, not flips, and it anchors the balance sheet while the operating lines compound." },
-
- { k:["up up","resale","flip","sold llc"],
-   a:"Ernestine",
-   t:"Up Up and Sold LLC is the resale line &mdash; anything worth selling. It captures the opportunistic margin between the other five lines and keeps cash moving while the longer plays mature. Unglamorous and necessary." },
-
- { k:["price","pricing","margin","finance","cash","cost","revenue","money","p&l","pnl","profit"],
-   a:"Eda",
-   t:"Margin first. I don't quote numbers I can't source, and I won't invent one to make a pitch sound better. Public pricing lives on the storefront &mdash; phat-man-llc.myshopify.com for apparel. Anything beyond published retail is a real conversation with assumptions written down, not a guess. Every recommendation I make lands as a draft until Boss SoLoman approves it." },
-
- { k:["ma'at","maat","governance","compliance","legal","approval","filing","risk","audit"],
-   a:"Ebony",
-   t:"Ma'at is the governance layer &mdash; order, balance, truth. It gates every action before it runs. Anything that publishes, sends externally, files legally, moves money, changes security, or acts in bulk is held as a draft and escalated for Founder approval. Nothing ships on momentum alone. That gate is why the system can move fast without breaking something that matters." },
-
- { k:["color","colour","pantone","brand","logo","badge","identity","font","visual","design"],
-   a:"Etta",
-   t:"The palette is locked. Process Black, Red 186C, Green 349C, and Gold 1235C. Two systems, and a piece picks one &mdash; never both. This site runs the second system: black, red, and green carry it, gold is the accent only. Only black and gold are ever accents. If a piece breaks that rule, it doesn't ship." },
-
- { k:["agent","elaine","da nine","danine","eleven","how many","roster","who are you","seat","ai team"],
-   a:"Elaine",
-   t:"Eleven agents. Me at the front door, and Da Nine behind me &mdash; Elena on systems architecture, Ernestine on operations, Estelle on research, Eda on finance, Ebony on compliance and Ma'at governance, Ezmarelda on publishing, Etta on brand standards, Ella on creative, Evangline on customer experience. Eleven is odd by design. Company-chosen numbers land odd around here." },
-
- { k:["server","9999","infrastructure","architecture","stack","technical","index","skills","how does it work","built","deploy","automation"],
-   a:"Elena",
-   t:"SoLo Server 9999 is the runtime &mdash; self-healing, carrying a 1,386-document knowledge index and 157 registered skills. The agents don't guess at the business, they read it: contracts, canon, pricing, brand standards, filings, all indexed and searchable. Every action routes through Ma'at before it executes. Prototype stays separate from production, and nothing gets called finished before it's tested." },
-
- { k:["holding","subsidiar","business","lines","portfolio","company","what do you do","about","empire","six"],
-   a:"Elaine",
-   t:"Six operating lines under one holding company: PHAT Man Apparel, Loner Publishing, Scented Serenity, Highway Bean Company, Up Up and Sold, and DoLo REI. SoLo Solutions Lab is the tech arm that runs all of it. It's not six unrelated bets &mdash; Highway Bean grows it, Scented Serenity makes it, PHAT Man carries the message, Loner builds the universe, DoLo holds the ground, Up Up and Sold captures what's in between. Vertical integration, not chaos." },
-
- { k:["order","shipping","ship","track","refund","return","size","sizing","support","help me buy","delivery","exchange"],
-   a:"Evangline",
-   t:"Orders, shipping, sizing, and returns for apparel run through the storefront at phat-man-llc.myshopify.com &mdash; order status and tracking live in your confirmation email. I won't overpromise a date I can't verify from the record. If your question needs something I can't confirm, I route it up rather than guess at it." },
-
- { k:["campaign","creative","social","marketing","launch","copy","post","content","advertis"],
-   a:"Ella",
-   t:"Campaign work starts with who it's for, then the hook, then the channel &mdash; in that order. Brand energy stays intact; I'll bring you options, not a coin flip. Anything customer-facing goes out as a draft first and clears Etta on brand standards and Ma'at on approval before it posts anywhere public." },
-
- { k:["operations","workflow","process","checklist","fulfil","fulfill","pod","shopify","printify","gelato","inventory"],
-   a:"Ernestine",
-   t:"Operations means the work is broken into steps with the blockers named out loud. Print-on-demand fulfillment, storefront operations, folder and task discipline &mdash; all of it tracked so nothing sits half-finished. Order before speed. I'll tell you plainly what's ready and what isn't." },
-
- { k:["research","source","knowledge","data","study","evidence","summarize","summary","fact"],
-   a:"Estelle",
-   t:"I separate what's known from what's inferred, and I name the limits of the source. The knowledge index carries 1,386 documents across the whole operation. If something isn't in the record, I'll say it isn't rather than fill the gap with something that sounds right." },
-
- { k:["invest","funding","partner","pitch","raise","acquire","valuation","opportunit"],
-   a:"Elaine",
-   t:"SoLo Industries Systems Inc. is privately held and Black-owned, operating out of New Orleans East. Serious partnership or investment questions get routed to Eda on finance and Ebony on compliance, and they come to Boss SoLoman as a governed draft &mdash; not a handshake in a chat window. Tell me what you're actually proposing and I'll put it in front of the right seat." },
-
- { k:["new orleans","louisiana","where","located","location","black-owned","black owned"],
-   a:"Elaine",
-   t:"New Orleans East, Louisiana. Black-owned, privately held, built in-house. The regional footprint isn't a limitation &mdash; it's the position. The goal is the best regional autonomous AI holding company, and regional is the point." },
-
- { k:["founder","owner","who owns","who built","ceo","boss soloman","name"],
-   a:"Elaine",
-   t:"The founder operates as Boss SoLoman and stays out of the public record by design &mdash; no name, no photo, no bio. That's a deliberate boundary, not an oversight. The work is the signature. What I can tell you about is the system, the six lines, and how any of it runs." },
-
- { k:["hire","job","work for","career","apply","resume"],
-   a:"Ernestine",
-   t:"There's no public hiring pipeline posted right now. The operating model is deliberately lean &mdash; the AI system does the coordination work a staffed back office normally would. If you want to propose something specific, say what you'd own and I'll route it to the seat that covers it." }
-];
-
-var GENERIC = {
-  "Elaine":"I've got you at the front door. Tell me which line or which domain you're asking about &mdash; apparel, publishing, handmade goods, agriculture, resale, real estate, or the AI system itself &mdash; and I'll hand it to the seat that owns it.",
-  "Elena":"That lands in systems architecture. I'd want the schema and the integration points before I answer, and I don't call anything production until it's tested. Give me the specific piece you're asking about.",
-  "Ernestine":"That's operations. Give me the specific task and I'll turn it into steps with the blockers named. Order before speed.",
-  "Estelle":"That's a research question. I'll tell you what the record supports and what it doesn't &mdash; narrow it down and I'll pull what's actually known.",
-  "Eda":"That's a finance question. I'll show the math and flag the assumptions, and I won't invent a number. Tell me exactly what you need priced or measured.",
-  "Ebony":"That touches governance. Ma'at gates anything that publishes, sends, files, or moves money &mdash; it stays a draft until it's approved. Tell me the action you have in mind and I'll tell you what gate it hits.",
-  "Ezmarelda":"That's publishing. Manuscript, series continuity, or release &mdash; tell me which and I'll structure it.",
-  "Etta":"That's brand standards. The palette and badge rules are locked: black, red, green primary, gold accent only. Tell me what you're checking and I'll tell you if it holds.",
-  "Ella":"That's creative. Tell me the audience and the goal and I'll bring you angles &mdash; strategy first, then the hook.",
-  "Evangline":"That's customer experience. Ask me about the storefront, sizing, shipping, or returns and I'll answer from what's actually on record &mdash; I won't overpromise."
-};
-
-function route(txt){
-  var t = txt.toLowerCase();
-  for(var i=0;i<ANSWERS.length;i++){
-    for(var j=0;j<ANSWERS[i].k.length;j++){
-      if(t.indexOf(ANSWERS[i].k[j])>-1)
-        return {agent:ANSWERS[i].a, text:ANSWERS[i].t, why:'Matched routing keyword: "'+ANSWERS[i].k[j]+'"'};
-    }
-  }
-  for(var r=0;r<ROUTES.length;r++){
-    if(t.indexOf(ROUTES[r][0])>-1)
-      return {agent:ROUTES[r][1], text:GENERIC[ROUTES[r][1]], why:'Matched routing keyword: "'+ROUTES[r][0]+'"'};
-  }
-  return {agent:"Elaine", text:GENERIC.Elaine, why:"Default front-door routing to Elaine."};
+function soloAdd(role, who, text){
+  var log=document.getElementById('log'); if(!log) return null;
+  var d=soloEl('div','msg '+(role==='u'?'u':'a'));
+  if(role!=='u'&&who) d.appendChild(soloEl('div','who',who));
+  d.appendChild(soloEl('div','tx',text));
+  log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
 }
 
-var log = document.getElementById('log');
-var qin = document.getElementById('q');
+function ask(q){var i=document.getElementById('q'); if(i){i.value=q;} send();}
 
-function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-function addUser(t){
-  var d=document.createElement('div'); d.className='msg u'; d.textContent=t;
-  log.appendChild(d); log.scrollTop=log.scrollHeight;
-}
-function addAgent(r,delay){
-  var d=document.createElement('div'); d.className='msg a';
-  d.innerHTML='<div class="who">ELAINE</div><div class="bd">Reading that&hellip;</div>';
-  log.appendChild(d); log.scrollTop=log.scrollHeight;
-  setTimeout(function(){
-    var seat = r.agent==='Elaine'
-      ? '<b>Elaine</b> &middot; '+SEATS.Elaine+' &mdash; handled at the front door'
-      : 'Routed by Elaine to <b>'+r.agent+'</b> &middot; '+SEATS[r.agent];
-    d.innerHTML='<div class="who">'+(r.agent==='Elaine'?'ELAINE':'ELAINE &rarr; '+r.agent.toUpperCase())+'</div>'+
-      '<div class="bd">'+r.text+
-      '<div class="seat">'+seat+'<br>'+r.why+'</div></div>';
-    log.scrollTop=log.scrollHeight;
-  }, delay||520);
-}
-function ask(t){ addUser(t); addAgent(route(t)); qin.value=''; }
 function send(){
-  var v=qin.value.trim(); if(!v) return;
-  ask(v);
+  var i=document.getElementById('q'); if(!i) return;
+  var q=(i.value||'').trim(); if(!q||soloBusy) return;
+  soloBusy=true; i.value='';
+  soloAdd('u','',q);
+  var pend=soloAdd('a','ELAINE','…');
+  fetch(SOLO_API+'/public/chat',{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:q})
+  })
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(pend&&pend.parentNode) pend.parentNode.removeChild(pend);
+    soloAdd('a',(d.display_name||d.agent||'ELAINE').toUpperCase(),
+            d.reply||'I could not answer that one.');
+  })
+  .catch(function(){
+    if(pend&&pend.parentNode) pend.parentNode.removeChild(pend);
+    soloAdd('a','ELAINE',
+      'I am offline right now — the system is not reachable. Use the contact page and it reaches the Founder directly.');
+  })
+  .then(function(){ soloBusy=false; i.focus(); });
 }
-qin.addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
 
-/* opening line */
-addAgent({agent:"Elaine",
-  text:"Elaine here &mdash; front door for SoLo Industries Systems Inc. Eleven agents behind me, six operating lines, one governed system. Ask me about any of it and I'll route you to the seat that owns it.",
-  why:"Session opened."}, 200);
+document.addEventListener('DOMContentLoaded',function(){
+  var i=document.getElementById('q');
+  if(i) i.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){e.preventDefault(); send();}
+  });
+  fetch(SOLO_API+'/public/health').then(function(r){
+    if(!r.ok) throw 0;
+    var s=document.querySelector('.chat-hd .st');
+    if(s) s.textContent='ELAINE ONLINE \u00b7 LIVE SYSTEM';
+  }).catch(function(){
+    var s=document.querySelector('.chat-hd .st');
+    if(s) s.textContent='ELAINE OFFLINE';
+  });
+});
 </script>
 </body>
 </html>
