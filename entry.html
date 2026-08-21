@@ -24,6 +24,11 @@
 <article class="prose" id="c"></article>
 
 <div class="card" style="margin-top:52px">
+<h3>What did you think?</h3>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0">
+<button class="btn b-green" id="up">&#128077; Like <span id="ln">0</span></button>
+<button class="btn b-ghost" id="down">&#128078; Dislike <span id="dn">0</span></button></div>
+<p id="vmsg" style="color:var(--muted);font-size:.9rem;margin:0 0 20px"></p>
 <h3>Rate this entry</h3>
 <div id="stars" style="display:flex;gap:8px;margin:12px 0">
 <button class="btn b-ghost" data-s="1">1</button><button class="btn b-ghost" data-s="2">2</button>
@@ -33,7 +38,7 @@
 
 <div class="card" style="margin-top:18px">
 <h3>Leave a comment</h3>
-<p style="color:var(--muted);font-size:.88rem">Comments appear after the Founder approves them.</p>
+<p style="color:var(--muted);font-size:.88rem">Say what you think. Comments post straight to the page.</p>
 <input id="cn" placeholder="Your name" maxlength="60" style="width:100%;padding:12px;margin:8px 0;background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:5px;font:inherit">
 <textarea id="cb" placeholder="Say your piece" maxlength="2000" rows="4" style="width:100%;padding:12px;background:var(--ink);color:var(--paper);border:1px solid var(--line);border-radius:5px;font:inherit"></textarea>
 <button class="btn b-green" id="cs" style="margin-top:10px">Post comment</button>
@@ -63,7 +68,10 @@ function load(){
   document.title=t+' — Diary of a Mad Black Father';
   document.getElementById('t').textContent=t;
   document.getElementById('m').innerHTML='<span class="tag t-gold">'+esc(d.title.split('-')[0])+'</span>'+
-    '<span>'+(d.rating?('&#9733; '+d.rating+' of 5 · '+d.votes+' ratings'):'Not rated yet')+'</span>';
+    '<span>'+(d.rating?('&#9733; '+d.rating+' of 5 · '+d.votes+' ratings'):'Not rated yet')+'</span>'+
+    '<span>&#128077; '+(d.likes||0)+' &nbsp; &#128078; '+(d.dislikes||0)+'</span>';
+  document.getElementById('ln').textContent=d.likes||0;
+  document.getElementById('dn').textContent=d.dislikes||0;
   document.getElementById('c').innerHTML=esc(d.content).split(/\n+/).filter(Boolean)
     .map(function(p){return '<p>'+p+'</p>';}).join('');
   var cl=document.getElementById('clist');
@@ -82,6 +90,16 @@ document.getElementById('stars').addEventListener('click',function(e){
   document.getElementById('rmsg').textContent=d.ok?('Thank you — now '+d.rating+' of 5 across '+d.votes+' ratings.'):(d.error||'Could not save that.');
   load();}).catch(function(){document.getElementById('rmsg').textContent='Could not reach the server.';});
 });
+function react(v){
+ fetch(SOLO_API+'/public/blog/'+encodeURIComponent(slug)+'/react',{method:'POST',
+  headers:{'Content-Type':'application/json'},body:JSON.stringify({vote:v})})
+ .then(function(r){return r.json();}).then(function(d){
+  if(d.ok){document.getElementById('ln').textContent=d.likes;
+   document.getElementById('dn').textContent=d.dislikes;
+   document.getElementById('vmsg').textContent='Counted. Thanks for reading.';}
+ }).catch(function(){document.getElementById('vmsg').textContent='Could not reach the server.';});}
+document.getElementById('up').onclick=function(){react(1);};
+document.getElementById('down').onclick=function(){react(-1);};
 document.getElementById('cs').onclick=function(){
  var n=document.getElementById('cn').value.trim(), b=document.getElementById('cb').value.trim();
  if(!n||!b){document.getElementById('cmsg').textContent='Name and comment are both required.';return;}

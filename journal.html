@@ -43,7 +43,7 @@ fetch(SOLO_API+'/public/blog').then(r=>r.json()).then(d=>{
     var stars=p.rating?('&#9733; '+p.rating+' ('+p.votes+')'):'Not rated yet';
     return '<a class="card" href="/entry.html?s='+encodeURIComponent(p.slug)+'">'+
       '<div class="meta"><span class="tag t-gold">Entry '+num+'</span><span>'+stars+'</span>'+
-      '<span>'+p.comments+' comments</span></div><h3>'+t+'</h3>'+
+      '<span>&#128077; '+(p.likes||0)+'</span><span>'+p.comments+' comments</span></div><h3>'+t+'</h3>'+
       '<p>'+(p.excerpt||'').replace(/</g,'&lt;').slice(0,190)+'&hellip;</p>'+
       '<span class="foot-link">Read the entry &rarr;</span></a>';
   }).join('');
