@@ -1,0 +1,29 @@
+<!doctype html><html lang="en" data-api-base="https://api.soloindustriesblack.com"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diary of a Mad Black Father</title><meta name="description" content="Diary of a Mad Black Father: the founder’s record of building SoLo Industries and raising his children.">
+<link rel="stylesheet" href="site.css"></head><body>
+<nav class="nav"><div class="wrap nav-in"><a class="mark" href="index.html"><span class="mark-dot"></span>SOLO INDUSTRIES</a><div class="nav-links"><a href="index.html#holdings">Businesses</a><a href="income-engines.html">Income Engines</a><a href="growth.html">Growth</a><a class="on" href="blog.html">Blog</a><a href="index.html#elaine">Elaine</a></div></div></nav>
+<header class="hero"><div class="wrap"><div class="eyebrow">Loner Publishing · Founder journal</div><h1>Diary of a<br>Mad Black Father.</h1><p class="lede">Written alone. Published alone. Notes from a man building a company, raising two kids, and keeping the record straight.</p><div class="status" id="blog-status">Loading the record</div></div></header>
+<main><section class="section"><div class="wrap"><div class="section-head"><h2>Published entries</h2><p id="blog-count">Connecting to the company archive.</p></div><div class="list" id="posts"><div class="notice">Loading entries…</div></div></div></section></main>
+<footer><div class="wrap footer-in"><div><strong>Diary of a Mad Black Father</strong>Loner Publishing · SoLo Industries Systems Inc</div><div>The record stays intact</div></div></footer>
+<script src="site.js"></script><script>
+(async () => {
+  const posts = document.getElementById('posts');
+  try {
+    const response = await fetch(api('/public/blog'));
+    if (!response.ok) throw new Error();
+    const data = await response.json();
+    document.getElementById('blog-status').textContent = 'Archive online';
+    document.getElementById('blog-count').textContent = `${data.posts.length} published entries`;
+    posts.innerHTML = data.posts.map((post, index) => `
+      <a class="list-row" href="blog-post.html?slug=${encodeURIComponent(post.slug)}">
+        <span class="idx">${String(index + 1).padStart(2, '0')}</span>
+        <span><strong>${post.title}</strong><p>${formatDate(post.created_at)} · ${post.excerpt || ''}</p></span>
+        <span class="go">Read →</span>
+      </a>`).join('') || '<div class="notice">No published entries yet.</div>';
+  } catch {
+    document.getElementById('blog-status').textContent = 'Archive link offline';
+    document.getElementById('blog-count').textContent = 'The journal is temporarily unavailable.';
+    posts.innerHTML = '<div class="notice">The published entries could not be loaded. Please try again shortly.</div>';
+  }
+})();
+</script></body></html>

@@ -1,0 +1,115 @@
+<!doctype html><html lang="en" data-api-base="https://api.soloindustriesblack.com"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diary of a Mad Black Father</title><meta name="description" content="An entry from Diary of a Mad Black Father.">
+<link rel="stylesheet" href="site.css"></head><body>
+<nav class="nav"><div class="wrap nav-in"><a class="mark" href="index.html"><span class="mark-dot"></span>SOLO INDUSTRIES</a><div class="nav-links"><a href="index.html#holdings">Businesses</a><a href="income-engines.html">Income Engines</a><a href="growth.html">Growth</a><a class="on" href="blog.html">Blog</a><a href="index.html#elaine">Elaine</a></div></div></nav>
+<header class="hero"><div class="wrap narrow"><div class="eyebrow" id="date">Diary of a Mad Black Father</div><h1 id="title">Loading entry…</h1></div></header>
+<main><section class="section"><div class="wrap narrow"><article class="article" id="article"></article>
+<div class="engage" id="engage" hidden>
+  <div><div class="label">Your response</div><h2>Rate the entry.</h2></div>
+  <div class="reaction-row">
+    <button class="button" type="button" data-reaction="1">Respect <span id="likes">0</span></button>
+    <button class="button" type="button" data-reaction="-1">Disagree <span id="dislikes">0</span></button>
+  </div>
+  <div class="stars" aria-label="Rate this entry">
+    <button type="button" data-stars="1" aria-label="1 star">★</button><button type="button" data-stars="2" aria-label="2 stars">★</button><button type="button" data-stars="3" aria-label="3 stars">★</button><button type="button" data-stars="4" aria-label="4 stars">★</button><button type="button" data-stars="5" aria-label="5 stars">★</button>
+    <span id="rating">Not rated yet</span>
+  </div>
+  <form id="comment-form" class="comment-form">
+    <label for="comment-name">Name</label><input id="comment-name" maxlength="60" required autocomplete="name">
+    <label for="comment-body">Comment</label><textarea id="comment-body" maxlength="2000" required rows="5"></textarea>
+    <button class="button primary" type="submit">Submit for review</button><span id="comment-status" role="status"></span>
+  </form>
+  <div class="comments"><div class="label">Reader comments</div><div id="comments"></div></div>
+</div>
+<div class="actions"><a class="button" href="blog.html">← All entries</a><a class="button" href="affiliate.html">Browse tools & deals</a><a class="button primary" href="https://phat-man-llc.myshopify.com" target="_blank" rel="noopener">Shop PHAT Man</a></div></div></section></main>
+<footer><div class="wrap footer-in"><div><strong>Diary of a Mad Black Father</strong>Loner Publishing</div><div>Written under Boss SoLoman</div></div></footer>
+<script src="site.js"></script><script>
+(async () => {
+  const slug = new URLSearchParams(location.search).get('slug');
+  if (!slug) {
+    document.getElementById('title').textContent = 'Entry not found';
+    return;
+  }
+  try {
+    const response = await fetch(api(`/public/blog/${encodeURIComponent(slug)}`));
+    if (!response.ok) throw new Error();
+    const post = await response.json();
+    document.title = `${post.title} — Diary of a Mad Black Father`;
+    document.getElementById('title').textContent = post.title;
+    document.getElementById('date').textContent = formatDate(post.created_at);
+    document.getElementById('article').textContent = post.content;
+    document.getElementById('likes').textContent = post.likes;
+    document.getElementById('dislikes').textContent = post.dislikes;
+    document.getElementById('rating').textContent = post.votes
+      ? `${post.rating} / 5 from ${post.votes} reader${post.votes === 1 ? '' : 's'}`
+      : 'Not rated yet';
+    const comments = document.getElementById('comments');
+    if (!post.comments.length) comments.innerHTML = '<p class="muted">No approved comments yet.</p>';
+    post.comments.forEach(comment => {
+      const item = document.createElement('div');
+      item.className = 'comment';
+      const name = document.createElement('strong');
+      name.textContent = comment.name;
+      const body = document.createElement('p');
+      body.textContent = comment.body;
+      const date = document.createElement('small');
+      date.textContent = formatDate(comment.created_at);
+      item.append(name, body, date);
+      comments.appendChild(item);
+    });
+    document.getElementById('engage').hidden = false;
+  } catch {
+    document.getElementById('title').textContent = 'Entry unavailable';
+    document.getElementById('article').textContent = 'The live journal service could not be reached.';
+  }
+
+  const visitor = localStorage.getItem('solo-reader-id') || crypto.randomUUID();
+  localStorage.setItem('solo-reader-id', visitor);
+
+  document.querySelectorAll('[data-reaction]').forEach(button => button.addEventListener('click', async () => {
+    const response = await fetch(api(`/public/blog/${encodeURIComponent(slug)}/react`), {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({vote: Number(button.dataset.reaction), voter: visitor})
+    });
+    const result = await response.json();
+    if (response.ok) {
+      document.getElementById('likes').textContent = result.likes;
+      document.getElementById('dislikes').textContent = result.dislikes;
+    }
+  }));
+
+  document.querySelectorAll('[data-stars]').forEach(button => button.addEventListener('click', async () => {
+    const stars = Number(button.dataset.stars);
+    const response = await fetch(api(`/public/blog/${encodeURIComponent(slug)}/rate`), {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({stars, voter: visitor})
+    });
+    const result = await response.json();
+    if (response.ok) {
+      document.getElementById('rating').textContent = `${result.rating} / 5 from ${result.votes} reader${result.votes === 1 ? '' : 's'}`;
+      document.querySelectorAll('[data-stars]').forEach(star => {
+        star.classList.toggle('selected', Number(star.dataset.stars) <= stars);
+      });
+    }
+  }));
+
+  document.getElementById('comment-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    const status = document.getElementById('comment-status');
+    status.textContent = 'Sending…';
+    const response = await fetch(api(`/public/blog/${encodeURIComponent(slug)}/comment`), {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name: document.getElementById('comment-name').value,
+        body: document.getElementById('comment-body').value
+      })
+    });
+    const result = await response.json();
+    status.textContent = result.message || result.error || 'Unable to submit.';
+    if (response.ok) event.target.reset();
+  });
+})();
+</script></body></html>
