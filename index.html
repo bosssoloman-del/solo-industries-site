@@ -1,571 +1,80 @@
-<!doctype html>
-<html lang="en" data-api-base="https://api.soloindustriesblack.com">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SoLo Industries Systems Inc — AI-Governed Holding Company</title>
-<meta name="description" content="SoLo Industries Systems Inc. is a Black-owned autonomous AI holding company in New Orleans East. Six operating lines. One AI operating system. Ma'at governs every action.">
-<meta name="theme-color" content="#050506">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="https://soloindustriesblack.com/">
-<meta property="og:title" content="SoLo Industries Systems Inc.">
-<meta property="og:description" content="A Black-owned, AI-governed holding company. Six operating lines run on one accountable operating system.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://soloindustriesblack.com/">
-<meta property="og:image" content="https://soloindustriesblack.com/assets/solo-industries-systems-inc-logo.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --void:#050506; --obsidian:#0B0B0D; --surface:#111114; --line:#1D1D22;
-  --blood:#9E1B1B; --blood-lit:#C93030; --kush:#1F6B3A; --kush-lit:#35A05C;
-  --gold:#C9A227; --gold-lit:#E6C868;
-  --bone:#EDE8DF; --ash:#8E8781;
-  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-  --disp:'Archivo',system-ui,-apple-system,sans-serif;
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{background:var(--void);color:var(--bone);font-family:var(--mono);font-weight:300;
-  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background:radial-gradient(circle at 78% 12%,rgba(158,27,27,.1),transparent 32%),
-  radial-gradient(circle at 12% 62%,rgba(31,107,58,.08),transparent 30%)}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-::selection{background:var(--gold);color:var(--void)}
-:focus-visible{outline:2px solid var(--gold-lit);outline-offset:4px}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-.narrow{max-width:760px}
-
-/* NAV */
-.nav{position:sticky;top:0;z-index:60;background:rgba(5,5,6,.9);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line)}
-.nav-in{display:flex;justify-content:space-between;align-items:center;height:62px;gap:14px}
-.mark{display:flex;align-items:center;gap:10px;min-width:0}
-.mark-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;
-  border:2px solid var(--gold-lit);flex:none}
-.mark-txt{font-family:var(--disp);font-weight:800;font-size:12.5px;letter-spacing:.14em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nav-links{display:flex;gap:20px;font-size:11.5px;letter-spacing:.11em;color:var(--ash);align-items:center}
-.nav-links a{border-bottom:1px solid transparent;padding-bottom:2px}
-.nav-links a:hover{color:var(--gold-lit);border-bottom-color:var(--gold)}
-.nav-links .nav-cta{border:1px solid rgba(201,162,39,.5);border-radius:999px;
-  padding:7px 12px;color:var(--gold-lit)}
-@media(max-width:760px){
-  .nav-in{height:auto;min-height:62px;align-items:flex-start;padding-top:15px;padding-bottom:12px}
-  .nav-links{max-width:54vw;overflow-x:auto;gap:14px;padding:2px 2px 8px;scrollbar-width:none}
-  .nav-links::-webkit-scrollbar{display:none}.nav-links a{white-space:nowrap}
-}
-
-/* TYPE */
-.eyebrow{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.26em;
-  color:var(--gold);text-transform:uppercase;margin-bottom:18px}
-.eyebrow span{width:26px;height:1px;background:var(--gold);flex:none}
-h1{font-family:var(--disp);font-weight:900;font-size:clamp(30px,7.4vw,62px);
-  line-height:1.03;letter-spacing:-.018em}
-h2{font-family:var(--disp);font-weight:800;font-size:clamp(23px,4.4vw,38px);
-  line-height:1.1;letter-spacing:-.012em}
-h3{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:.01em}
-.lede{font-size:clamp(15px,2.1vw,18px);color:var(--bone);max-width:62ch;margin-top:20px;line-height:1.68}
-.muted{color:var(--ash)}
-.hl-r{color:var(--blood-lit)} .hl-g{color:var(--kush-lit)} .hl-a{color:var(--gold-lit)}
-
-/* HERO */
-.hero{padding:74px 0 60px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-160px;right:-140px;width:440px;height:440px;
-  background:radial-gradient(circle,rgba(158,27,27,.20),transparent 68%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:-190px;left:-150px;width:430px;height:430px;
-  background:radial-gradient(circle,rgba(31,107,58,.18),transparent 68%);pointer-events:none}
-.hero-in{position:relative;z-index:2}
-.hero-in::before{content:'SGIE // SFL // 2029';position:absolute;right:0;top:0;
-  color:rgba(237,232,223,.16);font-size:9px;letter-spacing:.28em;writing-mode:vertical-rl}
-.hero h1 em{font-style:normal;color:var(--blood-lit)}
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
-.badge{font-size:10.5px;letter-spacing:.13em;padding:7px 13px;border:1px solid var(--line);
-  border-radius:999px;color:var(--ash);background:var(--obsidian)}
-.badge.g{border-color:rgba(31,107,58,.6);color:var(--kush-lit)}
-.badge.r{border-color:rgba(158,27,27,.6);color:var(--blood-lit)}
-.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.action{display:inline-flex;align-items:center;justify-content:center;min-height:44px;
-  border:1px solid var(--gold);border-radius:999px;padding:10px 18px;font-size:10.5px;
-  letter-spacing:.13em;text-transform:uppercase;transition:.2s}
-.action.primary{background:var(--gold);color:var(--void);font-weight:700}
-.action:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,0,0,.35)}
-
-/* SECTIONS */
-.sec{padding:64px 0;border-bottom:1px solid var(--line)}
-.sec-head{margin-bottom:36px}
-.sec-num{font-size:10px;letter-spacing:.3em;color:var(--gold);margin-bottom:12px}
-
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-top:34px}
-.stat{background:var(--obsidian);border:1px solid var(--line);border-radius:12px;padding:18px 16px;
-  border-top:2px solid var(--gold)}
-.stat .v{font-family:var(--disp);font-weight:900;font-size:27px;line-height:1;color:var(--bone)}
-.stat .k{font-size:9.5px;letter-spacing:.17em;color:var(--ash);margin-top:9px;text-transform:uppercase}
-
-/* CARDS */
-.grid{display:grid;gap:14px}
-.g2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
-.card{background:var(--obsidian);border:1px solid var(--line);border-radius:14px;padding:24px;
-  position:relative;transition:.25s;overflow:hidden}
-.card::after{content:'';position:absolute;inset:auto -30% -70% 35%;height:120px;
-  background:radial-gradient(circle,rgba(201,162,39,.08),transparent 66%);pointer-events:none}
-.card:hover{border-color:rgba(201,162,39,.45);transform:translateY(-2px)}
-.card-idx{font-size:9.5px;letter-spacing:.24em;color:var(--gold);margin-bottom:14px}
-.card h3{margin-bottom:6px}
-.card .role{font-size:10.5px;letter-spacing:.13em;color:var(--kush-lit);
-  text-transform:uppercase;margin-bottom:11px}
-.card p{font-size:13.5px;color:var(--ash);line-height:1.66}
-.card .logo{height:38px;width:auto;margin-bottom:16px;opacity:.92}
-.card .lnk{display:inline-block;margin-top:15px;font-size:11.5px;letter-spacing:.11em;
-  color:var(--gold-lit);border-bottom:1px solid rgba(201,162,39,.45);padding-bottom:2px}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.tag{font-size:9.5px;letter-spacing:.1em;padding:4px 9px;border-radius:5px;
-  background:rgba(158,27,27,.14);border:1px solid rgba(158,27,27,.3);color:var(--blood-lit)}
-
-/* CHAIN */
-.chain{display:flex;flex-direction:column;gap:0;margin-top:8px}
-.link{display:flex;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);align-items:baseline}
-.link:last-child{border-bottom:0}
-.link .n{font-family:var(--disp);font-weight:900;font-size:13px;color:var(--gold);flex:none;width:30px}
-.link .t{font-size:13.5px;color:var(--bone)}
-.link .t b{color:var(--kush-lit);font-weight:500}
-</style>
-</head>
-<body>
-<style>
-/* AGENT PILLS */
-.roster{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
-.pill{background:var(--obsidian);border:1px solid var(--line);border-radius:999px;
-  padding:9px 15px;font-size:11.5px;letter-spacing:.04em;color:var(--bone)}
-.pill b{color:var(--ash);font-weight:300;font-size:10px;letter-spacing:.1em}
-.pill.lead{border-color:var(--blood);color:var(--blood-lit)}
-
-/* CHAT */
-.chat{background:var(--obsidian);border:1px solid var(--line);border-radius:16px;
-  overflow:hidden;margin-top:32px;border-top:2px solid var(--blood)}
-.chat-hd{display:flex;align-items:center;gap:11px;padding:16px 18px;
-  border-bottom:1px solid var(--line);background:var(--surface)}
-.chat-hd .dot{width:8px;height:8px;border-radius:50%;background:var(--kush-lit);
-  border:2px solid var(--kush);flex:none}
-.chat-hd .nm{font-family:var(--disp);font-weight:800;font-size:13.5px;letter-spacing:.09em}
-.chat-hd .st{font-size:9.5px;letter-spacing:.15em;color:var(--ash);margin-left:auto;text-align:right}
-.log{padding:18px;max-height:430px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
-.msg{max-width:88%;font-size:13.5px;line-height:1.66}
-.msg.u{align-self:flex-end;background:rgba(158,27,27,.17);border:1px solid rgba(158,27,27,.34);
-  border-radius:13px 13px 3px 13px;padding:11px 14px;color:var(--bone)}
-.msg.a{align-self:flex-start}
-.msg.a .who{font-size:9.5px;letter-spacing:.19em;color:var(--gold);margin-bottom:6px;
-  text-transform:uppercase}
-.msg.a .bd{background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--kush);
-  border-radius:3px 13px 13px 13px;padding:11px 14px;color:var(--bone)}
-.msg.a .seat{font-size:10px;letter-spacing:.1em;color:var(--ash);margin-top:8px;
-  padding-top:8px;border-top:1px dashed var(--line)}
-.msg.a .seat b{color:var(--kush-lit);font-weight:400}
-.chat-in{display:flex;gap:9px;padding:14px;border-top:1px solid var(--line);background:var(--surface)}
-.chat-in input{flex:1;min-width:0;background:var(--void);border:1px solid var(--line);
-  border-radius:10px;padding:13px 14px;color:var(--bone);font-family:var(--mono);
-  font-size:16px;outline:none}
-.chat-in input:focus{border-color:var(--gold)}
-.chat-in button{background:var(--blood);color:#fff;border:0;border-radius:10px;padding:13px 20px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.13em;font-weight:500;flex:none}
-.chat-in button:active{background:#7d1515}
-.sugg{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 14px;background:var(--surface)}
-.sugg button{background:var(--void);border:1px solid var(--line);color:var(--ash);
-  border-radius:999px;padding:7px 12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em}
-.sugg button:active{border-color:var(--gold);color:var(--gold-lit)}
-
-/* FOOTER */
-footer{padding:44px 0 56px}
-.foot-in{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between}
-.foot-l{font-family:var(--disp);font-weight:800;font-size:13px;letter-spacing:.1em}
-.foot-s{font-size:11.5px;color:var(--ash);margin-top:9px;line-height:1.8}
-.foot-r{font-size:10.5px;letter-spacing:.19em;color:var(--gold);text-align:right;line-height:2}
-.rule{height:1px;background:var(--line);margin:0}
-@media(prefers-reduced-motion:no-preference){
-  .sec,.hero-in{animation:enter .65s both}
-  @keyframes enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
-</style>
-
-<nav class="nav"><div class="wrap nav-in">
-  <a class="mark" href="#top"><span class="mark-dot"></span><span class="mark-txt">SOLO INDUSTRIES SYSTEMS INC</span></a>
-  <div class="nav-links">
-    <a href="#holdings">Businesses</a>
-    <a href="income-engines.html">Income Engines</a>
-    <a href="growth.html">Growth</a>
-    <a href="blog.html">Blog</a>
-    <a href="affiliate.html">Tools &amp; Deals</a>
-    <a href="#elaine">Elaine</a>
-    <a class="nav-cta" href="https://phat-man-llc.myshopify.com" target="_blank" rel="noopener">Shop</a>
-  </div>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SoLo Industries Systems Inc &mdash; Autonomous AI Holding Company</title><meta name="description" content="A Black-owned holding company in New Orleans East whose six subsidiaries are run by an autonomous AI operating system.">
+<meta name="theme-color" content="#14110F">
+<meta property="og:title" content="SoLo Industries Systems Inc &mdash; Autonomous AI Holding Company"><meta property="og:description" content="A Black-owned holding company in New Orleans East whose six subsidiaries are run by an autonomous AI operating system.">
+<meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/solo.css">
+<link rel="icon" href="/assets/solo-industries-systems-inc-logo.png">
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav"><div class="wrap">
+<div class="nav-in">
+<a class="brand" href="/"><img src="/assets/solo-industries-systems-inc-logo.png" alt="SoLo Industries Systems Inc."><span>SoLo Industries<br>Systems Inc</span></a>
+<div class="nav-links"><a href="/system.html">The System</a><a href="/companies.html">Companies</a><a href="/engines.html">Engines</a><a href="/board.html">The Board</a><a href="/journal.html">Journal</a><a href="/elaine.html">Elaine</a></div>
+<button class="burger" aria-label="Menu" aria-expanded="false" onclick="var m=document.getElementById('mob');m.classList.toggle('open');this.setAttribute('aria-expanded',m.classList.contains('open'))">&#9776;</button>
+</div><div class="mobile" id="mob"><a href="/system.html">The System</a><a href="/companies.html">Companies</a><a href="/engines.html">Engines</a><a href="/board.html">The Board</a><a href="/journal.html">Journal</a><a href="/elaine.html">Elaine</a></div>
 </div></nav>
-
-<div id="top"></div>
-
-<section class="hero"><div class="wrap hero-in">
-  <div class="eyebrow"><span></span>New Orleans East &middot; Black-Owned &middot; Est. Louisiana</div>
-  <h1>A regional<br><em>AI-governed holding</em><br>company.</h1>
-  <p class="lede">SoLo Industries Systems Inc. is not a company that uses AI. The AI
-  <b>is</b> the company. One operating system runs six real businesses &mdash; apparel,
-  publishing, handmade goods, agriculture, resale, and real estate. The subsidiaries
-  aren't the pitch. They're the proof it works.</p>
-  <div class="badges">
-    <span class="badge r">Autonomous Operations</span>
-    <span class="badge g">Ma'at Governance</span>
-    <span class="badge">Six Operating Lines</span>
-    <span class="badge">Ten Governed Agents</span>
-  </div>
-  <div class="hero-actions">
-    <a class="action primary" href="#elaine">Talk to Elaine</a>
-    <a class="action" href="https://phat-man-llc.myshopify.com" target="_blank" rel="noopener">Shop PHAT Man</a>
-  </div>
-  <div class="stats">
-    <div class="stat"><div class="v" id="stat-agents">10</div><div class="k">AI Executives</div></div>
-    <div class="stat"><div class="v" id="stat-products">35</div><div class="k">Products</div></div>
-    <div class="stat"><div class="v" id="stat-titles">3</div><div class="k">Published Titles</div></div>
-    <div class="stat"><div class="v" id="stat-engines">5</div><div class="k">Income Engines</div></div>
-    <div class="stat"><div class="v" id="stat-lines">6</div><div class="k">Operating Lines</div></div>
-  </div>
-</div></section>
-<section class="sec" id="system"><div class="wrap">
-  <div class="sec-head">
-    <div class="sec-num">&sect; 01 &mdash; THE OPERATING SYSTEM</div>
-    <h2>Built by <span class="hl-g">SoLo Solutions Lab</span>.</h2>
-    <p class="lede">Most holding companies buy businesses and hire people to run them.
-    We built the operator first. SoLo Solutions Lab is the tech arm &mdash; it builds and
-    runs the system that operates every other line. Ten agents. One front door.
-    Nothing moves without governance.</p>
-  </div>
-  <div class="grid g2">
-    <a class="card" href="phat-man.html">
-      <div class="card-idx">01 / CHIEF EXECUTIVE OFFICER</div>
-      <h3>Elaine</h3>
-      <div class="role">CEO · Coordinating Intelligence</div>
-      <p>Elaine is the AI Chief Executive Officer of SoLo Industries Systems Inc.
-      She coordinates execution across the operating lines, brings decisions to the
-      correct director, and keeps the company moving under Founder authority.</p>
-    </div>
-    <div class="card">
-      <div class="card-idx">02 / BOARD OF DIRECTORS</div>
-      <h3>Da Nine</h3>
-      <div class="role">Nine AI Directors · Nine Domains</div>
-      <p>Da Nine is the Board of Directors. Each director holds one domain &mdash;
-      architecture, operations, research, finance, compliance, publishing, brand,
-      creative, or customer experience. Elaine leads; the Board governs and executes.</p>
-    </div>
-    <div class="card">
-      <div class="card-idx">03 / GOVERNANCE</div>
-      <h3>Ma'at</h3>
-      <div class="role">Order &middot; Balance &middot; Truth</div>
-      <p>Ma'at gates every action before it runs. Anything that publishes, sends,
-      files, moves money, or changes security is held as draft until it's approved.
-      The system is fast because it's governed &mdash; not in spite of it.</p>
-    </div>
-    <div class="card">
-      <div class="card-idx">04 / INFRASTRUCTURE</div>
-      <h3>Governed Infrastructure</h3>
-      <div class="role">Private Company Operations</div>
-      <p>The public experience connects to a deliberately limited information surface.
-      Company records, financials, filings, internal plans, and operating controls remain private.</p>
-    </div>
-  </div>
+<main id="main">
+<section class="hero"><svg class="spiral" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="none" stroke="#C8102E" stroke-width="2"/><path d="M100 16A84 84 0 1 1 16 100" fill="none" stroke="#C8102E" stroke-width="7" stroke-linecap="round"/><path d="M100 44A56 56 0 1 0 156 100" fill="none" stroke="#046A38" stroke-width="7" stroke-linecap="round"/><path d="M100 70A30 30 0 1 1 70 100" fill="none" stroke="#FFB81C" stroke-width="7" stroke-linecap="round"/><circle cx="100" cy="100" r="11" fill="#FFB81C"/></svg><div class="wrap">
+<p class="eyebrow">New Orleans East &middot; Louisiana &middot; Black-owned</p>
+<h1>The best regional<br><em>autonomous AI</em><br>holding company.</h1>
+<p class="lede">Six businesses. One operating system running all of them. SoLo Industries Systems Inc. is not a company that uses AI &mdash; the AI <b>is</b> the company. Every subsidiary is proof the system works.</p>
+<div class="cta"><a class="btn b-red" href="/system.html">How the system works</a>
+<a class="btn b-ghost" href="/companies.html">The six companies</a>
+<a class="btn b-gold" href="/elaine.html">Talk to Elaine</a></div>
 </div></section>
 
-<section class="sec" id="holdings"><div class="wrap">
-  <div class="sec-head">
-    <div class="sec-num">&sect; 02 &mdash; THE HOLDINGS</div>
-    <h2>Six lines. <span class="hl-r">One chain.</span></h2>
-    <p class="lede">This isn't a portfolio of unrelated bets. It's vertical integration
-    at scale &mdash; each line feeding the next.</p>
-  </div>
+<section><div class="wrap"><div class="stats">
+<div class="stat"><b>6</b><span>Operating lines</span></div>
+<div class="stat"><b>11</b><span>AI agents on staff</span></div>
+<div class="stat"><b>2,480</b><span>Documents indexed</span></div>
+<div class="stat"><b>157</b><span>Live skills</span></div>
+</div></div></section>
 
-  <div class="chain">
-    <div class="link"><div class="n">01</div><div class="t"><b>Highway Bean Company</b> grows the raw material.</div></div>
-    <div class="link"><div class="n">02</div><div class="t"><b>Scented Serenity</b> turns raw material into handmade premium goods.</div></div>
-    <div class="link"><div class="n">03</div><div class="t"><b>PHAT Man Apparel</b> carries the message the goods started.</div></div>
-    <div class="link"><div class="n">04</div><div class="t"><b>Loner Publishing</b> builds the universe the message came from.</div></div>
-    <div class="link"><div class="n">05</div><div class="t"><b>DoLo REI</b> acquires the ground everything stands on.</div></div>
-    <div class="link"><div class="n">06</div><div class="t"><b>Up Up and Sold</b> captures the revenue in between.</div></div>
-  </div>
+<section class="alt"><div class="wrap"><div class="head">
+<p class="kicker">&sect; 01 &mdash; The thesis</p>
+<h2>Most companies bought AI. We built the company around it.</h2>
+<p>A holding company is a bet that one management layer can run many businesses better than each could alone. That bet usually dies on headcount &mdash; you cannot staff six operations out of one office. So we didn&rsquo;t. The management layer here is software, and building it is the actual company.</p></div>
+<div class="grid g3">
+<div class="card"><p class="kicker">Layer 0</p><h3>Ma&rsquo;at governs</h3><p>Seven principles, enforced in code. Every action an agent proposes is graded green, amber, or red before it runs. Red never runs.</p></div>
+<div class="card"><p class="kicker">Layer 1</p><h3>SGIE-SFL sustains</h3><p>Self-Generating IP Expansion, sustained by the Self-Sustained Feedback Loop. Knowledge becomes IP, IP becomes products, products return feedback, feedback becomes memory. The loop returns higher than it started.</p></div>
+<div class="card"><p class="kicker">Layer 2</p><h3>Elaine and the Board execute</h3><p>Elaine is Chief Executive. Da Nine are the Board of Directors &mdash; nine intelligences who advise, review, and govern. The Founder approves.</p></div>
+</div></div></section>
 
-  <div class="grid g2" style="margin-top:40px">
-    <div class="card">
-      <img class="logo" src="assets/PHAT_MAN_LLC_badge.png" alt="PHAT Man Apparel">
-      <div class="card-idx">HOLDING 01</div>
-      <h3>PHAT Man Apparel</h3>
-      <div class="role">Streetwear &middot; Print On Demand</div>
-      <p>Proud, Hairy and Tatted. Casual and luxury streetwear for men who don't fit
-      the mold. Tiered by Weight Class &mdash; ROYAL at the top, Kings Apply Pressure
-      earning the badge. Thirty-five products live.</p>
-      <div class="tags">
-        <span class="tag">SSND</span><span class="tag">SFL</span><span class="tag">GROWTH</span>
-        <span class="tag">The Sovereign Algorithm &#x13127;&#x131CB;</span>
-        <span class="tag">Quad-Sovereign Algorithm</span>
-      </div>
-      <span class="lnk">Enter PHAT Man &rarr;</span>
-    </a>
-    <a class="card" href="loner-publishing.html">
-      <img class="logo" src="assets/LONER_Publishing_logo.png" alt="Loner Publishing">
-      <div class="card-idx">HOLDING 02</div>
-      <h3>Loner Publishing</h3>
-      <div class="role">Books &middot; Self-Published Canon</div>
-      <p>The universe the whole empire draws from. The Kushite Chronicles I&ndash;III
-      builds the mythology. <i>Out the Mud and Into the Machine</i> tells how the
-      system got built. Written and published in-house, start to finish.</p>
-      <div class="tags"><span class="tag">The Kushite Chronicles I&ndash;III</span>
-      <span class="tag">Out the Mud and Into the Machine</span></div>
-      <span class="lnk">Enter Loner Publishing &rarr;</span>
-    </a>
-    <a class="card" href="scented-serenity.html">
-      <img class="logo" src="assets/Scented_Serenity_logo.png" alt="Scented Serenity">
-      <div class="card-idx">HOLDING 03</div>
-      <h3>Scented Serenity</h3>
-      <div class="role">Handmade Goods</div>
-      <p>Candles, soaps, lotions &mdash; made by hand, not sourced and relabeled.
-      Premium small-batch goods built from what Highway Bean grows.</p>
-      <span class="lnk">Enter Scented Serenity &rarr;</span>
-    </a>
-    <a class="card" href="highway-bean.html">
-      <img class="logo" src="assets/AnitaRose_Beans_logo.png" alt="Highway Bean Company">
-      <div class="card-idx">HOLDING 04</div>
-      <h3>Highway Bean Company</h3>
-      <div class="role">Agriculture</div>
-      <p>Fruits, herbs, and vegetables grown for the chain. The first link &mdash;
-      raw material the rest of the empire is built on top of.</p>
-      <span class="lnk">Enter Highway Bean &rarr;</span>
-    </a>
-    <a class="card" href="up-up-and-sold.html">
-      <div class="card-idx">HOLDING 05</div>
-      <h3>Up Up and Sold LLC</h3>
-      <div class="role">Resale &middot; Opportunistic Revenue</div>
-      <p>Anything worth selling. The line that captures margin between the other
-      five &mdash; keeping cash moving while the long plays mature.</p>
-      <span class="lnk">Enter Up Up and Sold &rarr;</span>
-    </a>
-    <a class="card" href="dolo-rei.html">
-      <img class="logo" src="assets/dolo_rei_logo.png" alt="DoLo REI">
-      <div class="card-idx">HOLDING 06</div>
-      <h3>DoLo REI</h3>
-      <div class="role">Real Estate Investment</div>
-      <p>Acquisition and investment. Real property under the whole structure &mdash;
-      the ground the empire actually stands on.</p>
-      <span class="lnk">Enter DoLo REI &rarr;</span>
-    </a>
-  </div>
-  <div class="hero-actions">
-    <a class="action primary" href="income-engines.html">Explore the five income engines</a>
-    <a class="action" href="solo-solutions.html">Enter SoLo Solutions Lab</a>
-  </div>
-</div></section>
-<section class="sec" id="danine"><div class="wrap">
-  <div class="sec-head">
-    <div class="sec-num">&sect; 03 &mdash; DA NINE</div>
-    <h2>Nine seats. <span class="hl-a">Every domain covered.</span></h2>
-    <p class="lede">Ask Elaine anything below and she'll route it to the seat that owns it.</p>
-  </div>
-  <div class="grid g3">
-    <div class="card"><div class="card-idx">SEAT 01</div><h3>Elena</h3>
-      <div class="role">Systems Architecture</div>
-      <p>Schema-first, deployment-aware. Finds what breaks before it breaks and keeps
-      prototype separate from production.</p></div>
-    <div class="card"><div class="card-idx">SEAT 02</div><h3>Ernestine</h3>
-      <div class="role">Operations</div>
-      <p>Turns requests into checklists, flags blockers, enforces workflow discipline.
-      Order before speed.</p></div>
-    <div class="card"><div class="card-idx">SEAT 03</div><h3>Estelle</h3>
-      <div class="role">Research &amp; Knowledge</div>
-      <p>Separates fact from inference. States what's known and what isn't. Guards the
-      index against unsupported claims.</p></div>
-    <div class="card"><div class="card-idx">SEAT 04</div><h3>Eda</h3>
-      <div class="role">Finance</div>
-      <p>Margin hawk. Shows the math, flags the assumptions, never invents a number.</p></div>
-    <div class="card"><div class="card-idx">SEAT 05</div><h3>Ebony</h3>
-      <div class="role">Compliance &amp; Ma'at Governance</div>
-      <p>Holds the approval gate. Flags legal and compliance risk. Refuses reckless
-      execution, every time.</p></div>
-    <div class="card"><div class="card-idx">SEAT 06</div><h3>Ezmarelda</h3>
-      <div class="role">Publishing &amp; Editorial</div>
-      <p>Manuscript structure and series continuity. Turns rough drafts into release
-      plans and protects the canon.</p></div>
-    <div class="card"><div class="card-idx">SEAT 07</div><h3>Etta</h3>
-      <div class="role">Brand Standards</div>
-      <p>Color, logo, badge, and tone rules. If the visual is wrong, she says so.
-      Premium identity stays intact.</p></div>
-    <div class="card"><div class="card-idx">SEAT 08</div><h3>Ella</h3>
-      <div class="role">Creative &amp; Campaign</div>
-      <p>Turns ideas into hooks and launches. Options without losing the strategy.</p></div>
-    <div class="card"><div class="card-idx">SEAT 09</div><h3>Evangline</h3>
-      <div class="role">Customer Experience</div>
-      <p>Answers clearly, never overpromises, routes the unknown upward. Brand-safe
-      by default.</p></div>
-  </div>
-  <div class="roster">
-    <span class="pill lead">Elaine <b>&middot; COORDINATOR</b></span>
-    <span class="pill">Elena</span><span class="pill">Ernestine</span><span class="pill">Estelle</span>
-    <span class="pill">Eda</span><span class="pill">Ebony</span><span class="pill">Ezmarelda</span>
-    <span class="pill">Etta</span><span class="pill">Ella</span><span class="pill">Evangline</span>
-  </div>
-</div></section>
+<section><div class="wrap"><div class="head">
+<p class="kicker">&sect; 02 &mdash; Governance</p><h2>The seven principles of Ma&rsquo;at</h2>
+<p>Not a slogan on a wall. The governance layer is written against these, and every agent action is graded on them before it is allowed to run.</p></div>
+<div class="maat"><div class="principle"><b>Order</b><span>Structure before speed. Every decision has a place it lives.</span></div><div class="principle"><b>Balance</b><span>No line carries the whole weight. Six businesses, one system.</span></div><div class="principle"><b>Truth</b><span>Say the number. Never dress a failure as a result.</span></div><div class="principle"><b>Justice</b><span>What is owed gets paid. To workers, to partners, to the record.</span></div><div class="principle"><b>Harmony</b><span>The parts serve the whole. No subsidiary wins at another's cost.</span></div><div class="principle"><b>Reciprocity</b><span>Value in, value out. The loop returns what it is given.</span></div><div class="principle"><b>Propriety</b><span>Do it right when nobody is watching. Especially then.</span></div></div></div></section>
 
-<section class="sec" id="elaine"><div class="wrap narrow">
-  <div class="sec-head">
-    <div class="sec-num">&sect; 04 &mdash; FRONT DOOR</div>
-    <h2>Talk to <span class="hl-r">Elaine</span>.</h2>
-    <p class="lede">Ask about any line, any seat, or how the system runs. Elaine reads
-    your intent and hands it to whichever member of Da Nine owns that domain &mdash;
-    and she'll tell you which seat took it.</p>
-  </div>
+<section class="alt"><div class="wrap"><div class="head">
+<p class="kicker">&sect; 03 &mdash; The portfolio</p><h2>Six companies. Each one a load test.</h2>
+<p>Apparel proves inventory-free commerce. Publishing proves IP production. Agriculture proves what software cannot rush. Real estate proves the balance sheet. Different problems on purpose.</p></div>
+<div class="grid g3"><a class="card" href="/companies/phat-man-apparel.html"><img class="logo" src="/assets/PHAT_MAN_LLC_badge.png" alt="PHAT Man Apparel"><div class="meta"><span class="tag t-live">Live</span><span>Apparel</span></div><h3>PHAT Man Apparel</h3><p>Streetwear built for pressure.</p><span class="foot-link">Open the file &rarr;</span></a><a class="card" href="/companies/loner-publishing.html"><img class="logo" src="/assets/LONER_Publishing_logo.png" alt="Loner Publishing"><div class="meta"><span class="tag t-gold">In production</span><span>Publishing</span></div><h3>Loner Publishing</h3><p>Afrocentric fiction and the record of the build.</p><span class="foot-link">Open the file &rarr;</span></a><a class="card" href="/companies/scented-serenity.html"><img class="logo" src="/assets/Scented_Serenity_logo.png" alt="Scented Serenity"><div class="meta"><span class="tag t-gold">Filed</span><span>Home &amp; Body</span></div><h3>Scented Serenity</h3><p>Hand-poured. Small batch. Made by hand on purpose.</p><span class="foot-link">Open the file &rarr;</span></a><a class="card" href="/companies/highway-bean.html"><img class="logo" src="/assets/AnitaRose_Beans_logo.png" alt="The Highway Bean Company"><div class="meta"><span class="tag t-gold">Filed</span><span>Agriculture</span></div><h3>The Highway Bean Company</h3><p>Heirloom beans, herbs, and produce.</p><span class="foot-link">Open the file &rarr;</span></a><a class="card" href="/companies/up-up-and-sold.html"><div class="meta"><span class="tag t-gold">Filed</span><span>Resale &amp; Collectibles</span></div><h3>Up Up and Sold</h3><p>Pop-culture collectibles and gaming.</p><span class="foot-link">Open the file &rarr;</span></a><a class="card" href="/companies/dolo-rei.html"><img class="logo" src="/assets/dolo_rei_logo.png" alt="DoLo REI"><div class="meta"><span class="tag t-gold">Filed</span><span>Real Estate</span></div><h3>DoLo REI</h3><p>Ground you can stand on.</p><span class="foot-link">Open the file &rarr;</span></a></div></div></section>
 
-  <div class="chat">
-    <div class="chat-hd">
-      <span class="dot"></span>
-      <span class="nm">ELAINE</span>
-      <span class="st" id="st">CHECKING SYSTEM</span>
-    </div>
-    <div class="log" id="log"></div>
-    <div class="sugg">
-      <button onclick="ask('What does PHAT Man Apparel sell?')">PHAT Man</button>
-      <button onclick="ask('Tell me about the books and publishing')">Publishing</button>
-      <button onclick="ask('How does pricing and margin work?')">Finance</button>
-      <button onclick="ask('What is Ma&#39;at governance?')">Governance</button>
-      <button onclick="ask('What are the brand colors?')">Brand</button>
-      <button onclick="ask('How do I check an order?')">Customer</button>
-    </div>
-    <div class="chat-in">
-      <label for="q" style="position:absolute;left:-9999px">Ask Elaine</label>
-      <input id="q" placeholder="Ask Elaine&hellip;" autocomplete="off" maxlength="900">
-      <button type="button" onclick="send()">SEND</button>
-    </div>
-  </div>
-</div></section>
+<section><div class="wrap"><div class="head">
+<p class="kicker">&sect; 04 &mdash; Revenue</p><h2>Four engines, built to settle fast.</h2>
+<p>The subsidiaries are the holdings. These are the engines that move cash through them.</p></div>
+<div class="grid g4"><a class="card" href="/engines.html"><p class="kicker">Engine 01</p><h3>B2B Automated Operation</h3><p>A lightweight lead-forwarding service that pushes a web form straight to the owner&rsquo;s cell as an SMS within five seconds of submission.</p><span class="foot-link">$150 &ndash; $300 flat per setup</span></a><a class="card" href="/engines.html"><p class="kicker">Engine 02</p><h3>Hyper-Niche Digital Products</h3><p>Hyper-specific operational sheets &mdash; the 1099 Tradesman Mileage &amp; Expense Ledger and its siblings. Built once, sold repeatedly.</p><span class="foot-link">$15 &ndash; $30 per sale, automated</span></a><a class="card" href="/engines.html"><p class="kicker">Engine 03</p><h3>Impulse &amp; Streetwear POD</h3><p>High-impact prints and print-on-demand apparel &mdash; the PHAT Man tiers plus the capsule lines. Made after the order, shipped by the partner.</p><span class="foot-link">$20 &ndash; $50 profit per unit</span></a><a class="card" href="/engines.html"><p class="kicker">Engine 04</p><h3>Programmatic AI Gateway</h3><p>A FastAPI micro-service with a freemium tier &mdash; free calls, then metered. The Lab sells what the Lab already runs.</p><span class="foot-link">Metered, pay-per-call</span></a></div>
+<p style="margin-top:26px"><a href="/engines.html">Full engine breakdown &rarr;</a></p></div></section>
 
-<div class="rule"></div>
-<footer><div class="wrap foot-in">
-  <div>
-    <div class="foot-l">SoLo Industries Systems Inc</div>
-    <div class="foot-s">Autonomous AI holding company &middot; New Orleans East, Louisiana<br>
-    Black-owned &middot; Privately held &middot; Built alone. Built to last.<br>
-    <a href="mailto:bosssoloman@soloindustriesblack.com" style="color:var(--gold-lit)">Partnerships &middot; Press &middot; Licensing</a></div>
-  </div>
-  <div class="foot-r">MA'AT<br>ORDER &middot; BALANCE &middot; TRUTH</div>
-</div></footer>
-<script>
-const apiBase = document.documentElement.dataset.apiBase.replace(/\/$/, '');
-const log = document.getElementById('log');
-const qin = document.getElementById('q');
-const sendButton = document.querySelector('.chat-in button');
-const statusLabel = document.getElementById('st');
-const seats = {
-  Elaine: 'Chief Executive Officer', Elena: 'Systems Architecture Director',
-  Ernestine: 'Operations Director', Estelle: 'Research & Knowledge Director',
-  Eda: 'Finance Director', Ebony: "Compliance & Ma'at Governance Director",
-  Ezmarelda: 'Publishing & Editorial Director', Etta: 'Brand Director',
-  Ella: 'Creative & Campaign Director', Evangline: 'Customer Experience Director'
-};
-
-function endpoint(path) {
-  return `${apiBase}${path}`;
-}
-
-function addUser(text) {
-  const message = document.createElement('div');
-  message.className = 'msg u';
-  message.textContent = text;
-  log.appendChild(message);
-  log.scrollTop = log.scrollHeight;
-}
-
-function addAgent(result, pending = false) {
-  const message = document.createElement('div');
-  message.className = 'msg a';
-  const who = document.createElement('div');
-  who.className = 'who';
-  who.textContent = result.agent === 'Elaine' ? 'ELAINE' : `ELAINE → ${result.agent.toUpperCase()}`;
-  const body = document.createElement('div');
-  body.className = 'bd';
-  body.textContent = pending ? 'Routing through the public knowledge system…' : result.reply;
-  message.append(who, body);
-  if (!pending) {
-    const seat = document.createElement('div');
-    seat.className = 'seat';
-    seat.textContent = result.agent === 'Elaine'
-      ? `Elaine · ${seats.Elaine}`
-      : `CEO Elaine consulted ${result.agent} · ${seats[result.agent] || 'Board Director'}`;
-    body.appendChild(seat);
-  }
-  log.appendChild(message);
-  log.scrollTop = log.scrollHeight;
-  return {message, body, who};
-}
-
-async function ask(text) {
-  if (!text || sendButton.disabled) return;
-  addUser(text);
-  qin.value = '';
-  qin.disabled = true;
-  sendButton.disabled = true;
-  const pending = addAgent({agent: 'Elaine', reply: ''}, true);
-  try {
-    const response = await fetch(endpoint('/public/chat'), {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: text})
-    });
-    const result = await response.json();
-    if (!response.ok && !result.reply) throw new Error(result.error || 'Public link unavailable');
-    pending.message.remove();
-    addAgent({agent: result.agent || 'Elaine', reply: result.reply});
-    statusLabel.textContent = 'ONLINE · GOVERNED ROUTING';
-  } catch {
-    pending.message.remove();
-    addAgent({
-      agent: 'Elaine',
-      reply: 'The public intelligence link is temporarily unavailable. The company information on this page remains available, or use the partnership contact below.'
-    });
-    statusLabel.textContent = 'LINK OFFLINE · SAFE MODE';
-  } finally {
-    qin.disabled = false;
-    sendButton.disabled = false;
-    qin.focus();
-  }
-}
-
-async function loadSystemStatus() {
-  try {
-    const response = await fetch(endpoint('/public/site-stats'));
-    if (!response.ok) throw new Error();
-    const stats = await response.json();
-    document.getElementById('stat-agents').textContent = stats.agents;
-    document.getElementById('stat-products').textContent = stats.products;
-    document.getElementById('stat-titles').textContent = stats.published_titles;
-    document.getElementById('stat-engines').textContent = stats.income_engines;
-    document.getElementById('stat-lines').textContent = stats.operating_lines;
-    statusLabel.textContent = 'ONLINE · GOVERNED ROUTING';
-  } catch {
-    statusLabel.textContent = 'PUBLIC INFORMATION MODE';
-  }
-}
-
-function send() {
-  ask(qin.value.trim());
-}
-
-qin.addEventListener('keydown', event => {
-  if (event.key === 'Enter') send();
-});
-
-addAgent({
-  agent: 'Elaine',
-  reply: 'Elaine here — AI Chief Executive Officer of SoLo Industries Systems Inc. I lead Da Nine, our AI Board of Directors, across six operating lines. Ask me about the company, our products, or where to shop.'
-});
-loadSystemStatus();
-</script>
-</body>
-</html>
+<section class="alt"><div class="wrap" style="text-align:center">
+<p class="kicker">The front door</p>
+<h2 style="max-width:24ch;margin-inline:auto">Our Chief Executive answers the door herself.</h2>
+<p style="color:var(--dim);max-width:58ch;margin:0 auto 28px">Most companies keep the AI in the basement and put a form on the website. Ask Elaine anything &mdash; she reads what you need, hands it to the right member of the Board, and tells you who took it.</p>
+<a class="btn b-gold" href="/elaine.html">Talk to Elaine</a></div></section></main>
+<footer><div class="wrap"><div class="fgrid">
+<div><h4>SoLo Industries Systems Inc.</h4>
+<p style="color:var(--dim);max-width:42ch">A holding company out of New Orleans East, Louisiana. Six operating lines, one autonomous system, one governing doctrine.</p>
+<p class="creed">Ma&rsquo;at governs. SFL sustains. SGIE expands.</p></div>
+<div><h4>Companies</h4><ul><li><a href="/companies/phat-man-apparel.html">PHAT Man Apparel</a></li><li><a href="/companies/loner-publishing.html">Loner Publishing</a></li><li><a href="/companies/scented-serenity.html">Scented Serenity</a></li><li><a href="/companies/highway-bean.html">The Highway Bean Company</a></li><li><a href="/companies/up-up-and-sold.html">Up Up and Sold</a></li><li><a href="/companies/dolo-rei.html">DoLo REI</a></li><li><a href="/system.html">SoLo Solutions Lab</a></li></ul></div>
+<div><h4>Company</h4><ul>
+<li><a href="/system.html">The System</a></li><li><a href="/board.html">The Board</a></li>
+<li><a href="/engines.html">Revenue Engines</a></li><li><a href="/journal.html">Journal</a></li>
+<li><a href="/elaine.html">Talk to Elaine</a></li>
+<li><a href="https://phat-man-llc.myshopify.com" rel="noopener">PHAT Man store</a></li></ul></div>
+</div><div class="fbot"><span>&copy; 2026 SoLo Industries Systems Inc. Black-owned. New Orleans East, Louisiana.</span>
+<span>Nothing here is legal, tax, or investment advice.</span></div></div></footer>
+<script>window.SOLO_API="https://api.soloindustriesblack.com";</script></body></html>
